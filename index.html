@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desert Pickleball Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sand: #F5EDD9; --clay: #C0561A; --rust: #E8743B;
+      --dusk: #1A1410; --sage: #7A8C6E; --cream: #FBF7EE; --muted: #8A7B6A;
+      --green: #2E4A2B; --green-light: #7EC87A;
+      --font-display: 'Bebas Neue', 'Arial Narrow', Arial, sans-serif;
+      --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--dusk); font-family: var(--font-body); overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2.5rem; background: rgba(251,247,238,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(192,86,26,0.12); transition: box-shadow 0.3s; }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(26,20,16,0.08); }
+    .nav-logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.08em; color: var(--clay); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dusk); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--clay); }
+    .nav-cta { background: var(--clay); color: white !important; padding: 0.5rem 1.2rem; border-radius: 2px; }
+    .nav-cta:hover { background: var(--rust); color: white !important; }
+
+    #home { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 8rem 5vw 4rem; position: relative; overflow: hidden; gap: 2rem; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(232,116,59,0.10) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 20% 80%, rgba(122,140,110,0.08) 0%, transparent 60%); }
+    .hero-grid-lines { position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(rgba(192,86,26,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(192,86,26,0.05) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay); margin-bottom: 1.4rem; }
+    .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--clay); }
+    h1 { font-family: var(--font-display); font-size: clamp(4rem, 8vw, 7.5rem); line-height: 0.92; letter-spacing: 0.03em; color: var(--dusk); margin-bottom: 1.8rem; }
+    h1 span { color: var(--clay); }
+    .hero-sub { font-size: 1.05rem; line-height: 1.7; color: var(--muted); max-width: 440px; margin-bottom: 2.4rem; font-weight: 300; }
+    .btn-primary { display: inline-block; background: var(--clay); color: white; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.2rem; border-radius: 2px; transition: background 0.2s, transform 0.2s; }
+    .btn-primary:hover { background: var(--rust); transform: translateY(-2px); }
+    .btn-secondary { display: inline-block; border: 1.5px solid var(--clay); color: var(--clay); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.2rem; border-radius: 2px; margin-left: 1rem; transition: background 0.2s, color 0.2s; }
+    .btn-secondary:hover { background: var(--clay); color: white; }
+    .hero-visual { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; }
+    .court-diagram { width: min(200px, 90%); aspect-ratio: 220 / 436; }
+    .court-diagram svg { width: 100%; height: 100%; }
+    .hero-stats { display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(192,86,26,0.15); }
+    .stat-num { font-family: var(--font-display); font-size: 2.8rem; line-height: 1; color: var(--clay); letter-spacing: 0.04em; }
+    .stat-label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 0.3rem; }
+
+    section { padding: 6rem 5vw; }
+    .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--clay); margin-bottom: 0.8rem; }
+    h2 { font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4.5rem); letter-spacing: 0.03em; line-height: 1; color: var(--dusk); margin-bottom: 1.4rem; }
+    .section-sub { font-size: 1rem; line-height: 1.75; color: var(--muted); max-width: 520px; font-weight: 300; }
+
+    #about { background: var(--dusk); color: var(--sand); display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; align-items: center; position: relative; overflow: hidden; }
+    #about::before { content: 'DPA'; position: absolute; right: -2rem; top: 50%; transform: translateY(-50%); font-family: var(--font-display); font-size: 22rem; color: rgba(245,237,217,0.03); line-height: 1; pointer-events: none; user-select: none; }
+    #about .section-label { color: var(--rust); }
+    #about h2 { color: var(--sand); }
+    #about .section-sub { color: rgba(245,237,217,0.65); }
+    .about-body { font-size: 0.95rem; line-height: 1.8; color: rgba(245,237,217,0.75); margin-top: 1.5rem; font-weight: 300; }
+    .about-body p + p { margin-top: 1rem; }
+    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2.5rem; }
+    .feature-chip { display: flex; align-items: center; gap: 0.7rem; background: rgba(245,237,217,0.06); border: 1px solid rgba(245,237,217,0.1); padding: 0.9rem 1.1rem; border-radius: 4px; }
+    .feature-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rust); flex-shrink: 0; }
+    .feature-chip span { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em; color: var(--sand); }
+    .about-card { background: rgba(245,237,217,0.04); border: 1px solid rgba(245,237,217,0.1); border-radius: 6px; padding: 2.5rem; }
+    .coach-name { font-family: var(--font-display); font-size: 2.8rem; color: var(--sand); letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .coach-title { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust); margin-bottom: 1.6rem; }
+    .coach-bio { font-size: 0.92rem; line-height: 1.8; color: rgba(245,237,217,0.65); font-weight: 300; }
+    .coach-divider { height: 1px; background: rgba(245,237,217,0.1); margin: 1.6rem 0; }
+    .coach-details { display: flex; flex-direction: column; gap: 0.7rem; }
+    .coach-detail { display: flex; gap: 0.8rem; align-items: flex-start; }
+    .coach-detail .icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .coach-detail p { font-size: 0.85rem; color: rgba(245,237,217,0.6); line-height: 1.5; font-weight: 300; }
+
+    /* PROGRAMS SECTION */
+    #programs { background: var(--cream); }
+    .programs-header { margin-bottom: 3.5rem; }
+    .program-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .program-card { background: white; border: 1px solid rgba(192,86,26,0.12); border-radius: 8px; padding: 2.5rem 2.2rem; display: flex; flex-direction: column; transition: transform 0.25s, box-shadow 0.25s; position: relative; overflow: hidden; }
+    .program-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--clay); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+    .program-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(192,86,26,0.1); }
+    .program-card:hover::before { transform: scaleX(1); }
+    .program-card.featured { background: var(--dusk); border-color: var(--dusk); }
+    .program-card.featured::before { background: var(--rust); }
+    .prog-icon { font-size: 2.4rem; margin-bottom: 1.4rem; }
+    .prog-name { font-family: var(--font-display); font-size: 2rem; letter-spacing: 0.04em; color: var(--dusk); margin-bottom: 0.6rem; line-height: 1; }
+    .program-card.featured .prog-name { color: var(--sand); }
+    .prog-desc { font-size: 0.88rem; line-height: 1.7; color: var(--muted); font-weight: 300; flex: 1; margin-bottom: 1.8rem; }
+    .program-card.featured .prog-desc { color: rgba(245,237,217,0.6); }
+    .prog-meta { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; }
+    .prog-meta-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: var(--muted); font-weight: 400; }
+    .program-card.featured .prog-meta-item { color: rgba(245,237,217,0.6); }
+    .prog-meta-item span:first-child { color: var(--clay); font-size: 0.9rem; }
+    .program-card.featured .prog-meta-item span:first-child { color: var(--rust); }
+    .prog-price { font-family: var(--font-display); font-size: 2.8rem; color: var(--clay); letter-spacing: 0.03em; line-height: 1; margin-bottom: 0.3rem; }
+    .program-card.featured .prog-price { color: var(--rust); }
+    .prog-price-note { font-size: 0.75rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .program-card.featured .prog-price-note { color: rgba(245,237,217,0.45); }
+    .prog-btn { display: block; text-align: center; background: var(--clay); color: white; font-family: var(--font-body); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 0.9rem 1.5rem; border-radius: 2px; transition: background 0.2s, transform 0.15s; }
+    .prog-btn:hover { background: var(--rust); transform: translateY(-1px); }
+    .program-card.featured .prog-btn { background: var(--rust); }
+    .program-card.featured .prog-btn:hover { background: var(--clay); }
+
+    /* FAQ */
+    #faq { background: var(--sand); }
+    .faq-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 5vw; align-items: start; margin-top: 2rem; }
+    .faq-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .faq-item { background: white; border: 1px solid rgba(192,86,26,0.1); border-radius: 6px; overflow: hidden; }
+    .faq-question { width: 100%; background: none; border: none; text-align: left; padding: 1.3rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-family: var(--font-body); font-size: 0.92rem; font-weight: 500; color: var(--dusk); transition: background 0.2s; }
+    .faq-question:hover { background: rgba(192,86,26,0.04); }
+    .faq-question.open { background: rgba(192,86,26,0.06); color: var(--clay); }
+    .faq-icon { font-size: 1.2rem; color: var(--clay); flex-shrink: 0; transition: transform 0.3s; font-style: normal; }
+    .faq-question.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-answer.open { max-height: 300px; }
+    .faq-answer-inner { padding: 0 1.5rem 1.3rem; font-size: 0.88rem; line-height: 1.75; color: var(--muted); font-weight: 300; }
+
+    /* CERT BAR */
+    .cert-bar { background: var(--dusk); padding: 2.5rem 5vw; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; border-top: 1px solid rgba(245,237,217,0.06); }
+    .cert-item { display: flex; align-items: center; gap: 1rem; }
+    .cert-badge { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+    .cert-badge.ppr { background: rgba(192,86,26,0.15); border: 2px solid rgba(192,86,26,0.4); }
+    .cert-badge.fpc { background: rgba(46,74,43,0.3); border: 2px solid rgba(126,200,122,0.3); }
+    .cert-name { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.08em; color: var(--sand); }
+    .cert-detail { font-size: 0.72rem; color: rgba(245,237,217,0.45); margin-top: 0.1rem; }
+    .cert-divider { width: 1px; height: 40px; background: rgba(245,237,217,0.1); }
+
+    /* CONTACT */
+    #contact { background: var(--cream); position: relative; overflow: hidden; }
+    #contact::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(192,86,26,0.08), transparent 70%); pointer-events: none; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6vw; align-items: start; }
+    .contact-detail { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.8rem; }
+    .ci-icon { width: 40px; height: 40px; border-radius: 4px; background: var(--clay); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .ci-text p:first-child { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+    .ci-text p:last-child { font-size: 0.95rem; font-weight: 500; color: var(--dusk); }
+    .ci-text a { color: var(--clay); text-decoration: none; }
+    .ci-text a:hover { text-decoration: underline; }
+    .contact-form { background: white; border-radius: 6px; padding: 2.5rem; box-shadow: 0 4px 40px rgba(26,20,16,0.06); }
+    .form-title { font-family: var(--font-display); font-size: 2rem; letter-spacing: 0.04em; color: var(--dusk); margin-bottom: 0.4rem; }
+    .form-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 2rem; font-weight: 300; line-height: 1.6; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; margin-bottom: 1.2rem; }
+    .form-group label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .form-group input, .form-group select, .form-group textarea { font-family: var(--font-body); font-size: 0.9rem; color: var(--dusk); background: var(--cream); border: 1.5px solid rgba(192,86,26,0.15); border-radius: 3px; padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--clay); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit { width: 100%; background: var(--clay); color: white; font-family: var(--font-body); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border: none; border-radius: 3px; padding: 1rem; cursor: pointer; transition: background 0.2s, transform 0.2s; margin-top: 0.4rem; }
+    .form-submit:hover { background: var(--rust); transform: translateY(-1px); }
+
+    footer { background: var(--dusk); padding: 2.5rem 5vw; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 0.08em; color: var(--sand); }
+    .footer-copy { font-size: 0.8rem; color: rgba(245,237,217,0.4); font-weight: 300; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,237,217,0.5); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--rust); }
+
+    .fade-up { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .js-loaded .fade-up { opacity: 0; transform: translateY(30px); }
+    .js-loaded .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      #home { grid-template-columns: 1fr; padding-top: 7rem; }
+      .hero-visual { display: none; }
+      #about { grid-template-columns: 1fr; }
+      .program-cards { grid-template-columns: 1fr; }
+      .faq-layout { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .about-features { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Desert Pickleball Academy</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Cave Creek, Arizona</div>
+    <h1>Play Better.<br><span>Start Here.</span></h1>
+    <p class="hero-sub">Pro pickleball coaching for beginners and intermediate players. Structured lessons, real improvement, indoor courts — no fluff.</p>
+    <div>
+      <a href="#programs" class="btn-primary">View Programs</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">PRO</div><div class="stat-label">Level Coach</div></div>
+      <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Indoor Courts</div></div>
+      <div class="stat-item"><div class="stat-num">ESA</div><div class="stat-label">Program Available</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="court-diagram">
+      <svg viewBox="0 0 220 436" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="218" rx="90" ry="160" fill="#E8743B" opacity="0.04"/>
+        <rect x="20" y="20" width="180" height="396" rx="2" fill="rgba(192,86,26,0.05)"/>
+        <rect x="20" y="155" width="180" height="63" fill="#2E4A2B" opacity="0.35"/>
+        <rect x="20" y="218" width="180" height="63" fill="#2E4A2B" opacity="0.35"/>
+        <rect x="20" y="20" width="180" height="396" fill="none" stroke="white" stroke-width="2.5" opacity="0.9"/>
+        <line x1="20" y1="155" x2="200" y2="155" stroke="white" stroke-width="2" opacity="0.95"/>
+        <line x1="20" y1="281" x2="200" y2="281" stroke="white" stroke-width="2" opacity="0.95"/>
+        <line x1="110" y1="20" x2="110" y2="155" stroke="white" stroke-width="1.5" opacity="0.8"/>
+        <line x1="110" y1="281" x2="110" y2="416" stroke="white" stroke-width="1.5" opacity="0.8"/>
+        <line x1="12" y1="218" x2="208" y2="218" stroke="#E8743B" stroke-width="4.5" opacity="1"/>
+        <rect x="8" y="211" width="9" height="14" rx="2" fill="#E8743B"/>
+        <rect x="203" y="211" width="9" height="14" rx="2" fill="#E8743B"/>
+        <rect x="107" y="215" width="6" height="6" rx="1" fill="#FBF7EE" opacity="0.6"/>
+        <text x="110" y="193" text-anchor="middle" font-family="'Bebas Neue', Arial Narrow, sans-serif" font-size="11" fill="#7EC87A" opacity="0.9" letter-spacing="2">NVZ</text>
+        <text x="110" y="270" text-anchor="middle" font-family="'Bebas Neue', Arial Narrow, sans-serif" font-size="11" fill="#7EC87A" opacity="0.9" letter-spacing="2">NVZ</text>
+        <line x1="20" y1="10" x2="200" y2="10" stroke="#C0561A" stroke-width="1" opacity="0.3"/>
+        <line x1="20" y1="7" x2="20" y2="13" stroke="#C0561A" stroke-width="1" opacity="0.3"/>
+        <line x1="200" y1="7" x2="200" y2="13" stroke="#C0561A" stroke-width="1" opacity="0.3"/>
+        <text x="110" y="8" text-anchor="middle" font-family="'Bebas Neue', Arial Narrow, sans-serif" font-size="9" fill="#C0561A" opacity="0.45" letter-spacing="1">20 FT</text>
+        <line x1="210" y1="20" x2="210" y2="416" stroke="#C0561A" stroke-width="1" opacity="0.3"/>
+        <line x1="207" y1="20" x2="213" y2="20" stroke="#C0561A" stroke-width="1" opacity="0.3"/>
+        <line x1="207" y1="416" x2="213" y2="416" stroke="#C0561A" stroke-width="1" opacity="0.3"/>
+        <text x="218" y="222" text-anchor="middle" font-family="'Bebas Neue', Arial Narrow, sans-serif" font-size="9" fill="#C0561A" opacity="0.45" letter-spacing="1" transform="rotate(90,218,222)">44 FT</text>
+        <circle cx="110" cy="65" r="10" fill="#C0561A" opacity="0.9"/>
+        <circle cx="110" cy="65" r="5" fill="#E8743B" opacity="1"/>
+        <circle cx="110" cy="371" r="10" fill="#3D5C3A" opacity="0.9"/>
+        <circle cx="110" cy="371" r="5" fill="#7EC87A" opacity="1"/>
+        <path d="M 110 358 Q 148 210 110 78" stroke="#E8743B" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.45" fill="none"/>
+        <circle cx="138" cy="205" r="7" fill="#FBF7EE" stroke="#E8743B" stroke-width="2" opacity="1"/>
+        <circle cx="20" cy="20" r="3" fill="#C0561A" opacity="0.6"/>
+        <circle cx="200" cy="20" r="3" fill="#C0561A" opacity="0.6"/>
+        <circle cx="20" cy="416" r="3" fill="#C0561A" opacity="0.6"/>
+        <circle cx="200" cy="416" r="3" fill="#C0561A" opacity="0.6"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-up">
+    <div class="section-label">Who We Are</div>
+    <h2>Built for Players<br>Who Want Results</h2>
+    <p class="section-sub">Desert Pickleball Academy isn't a rec center class. It's pro-level coaching that actually moves the needle on your game.</p>
+    <div class="about-body">
+      <p>Based in Cave Creek, Arizona, DPA was built to fill a real gap — too many beginners pick up a paddle and never get proper fundamentals. Too many intermediate players plateau because they've never been coached on the right things.</p>
+      <p>Every lesson is designed with a clear outcome: you leave knowing exactly what improved and what to work on next.</p>
+    </div>
+    <div class="about-features">
+      <div class="feature-chip"><div class="dot"></div><span>Pro-Level Coaching</span></div>
+      <div class="feature-chip"><div class="dot"></div><span>Indoor Courts (All Weather)</span></div>
+      <div class="feature-chip"><div class="dot"></div><span>Beginner Friendly</span></div>
+      <div class="feature-chip"><div class="dot"></div><span>Structured Curriculum</span></div>
+      <div class="feature-chip"><div class="dot"></div><span>Arizona ESA Eligible</span></div>
+      <div class="feature-chip"><div class="dot"></div><span>Cave Creek, AZ</span></div>
+    </div>
+  </div>
+  <div class="fade-up">
+    <div class="about-card">
+      <div class="coach-name">Cody Temple</div>
+      <div class="coach-title">Pro Player & Head Coach</div>
+      <p class="coach-bio">Cody is a professional pickleball player who started Desert Pickleball Academy to share what actually works — real technique, real strategy, and a coaching approach that makes improvement feel immediate. His lessons focus on fundamentals, game sense, and building confidence on the court.</p>
+      <div class="coach-divider"></div>
+      <div class="coach-details">
+        <div class="coach-detail"><span class="icon">🏆</span><p>Professional pickleball player with competitive experience — coaching from the inside out, not just the sideline.</p></div>
+        <div class="coach-detail"><span class="icon">📍</span><p>Based in Cave Creek, Arizona. Lessons held at our indoor facility — no heat, no wind, no cancellations.</p></div>
+        <div class="coach-detail"><span class="icon">🏫</span><p>Also runs the DPA Arizona ESA Program — structured group pickleball for homeschool and online students.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section id="programs">
+  <div class="programs-header fade-up">
+    <div class="section-label">What We Offer</div>
+    <h2>Choose Your Program</h2>
+    <p class="section-sub">Three ways to get on the court. Click any program to see full details and pricing.</p>
+  </div>
+  <div class="program-cards fade-up">
+
+    <div class="program-card">
+      <div class="prog-icon">🏓</div>
+      <div class="prog-name">Intro Clinic</div>
+      <p class="prog-desc">A one-day beginner clinic held every other Tuesday evening. Walk in not knowing the rules — leave ready to actually play a real game.</p>
+      <div class="prog-meta">
+        <div class="prog-meta-item"><span>📅</span><span>Every other Tuesday · 6:00 PM</span></div>
+        <div class="prog-meta-item"><span>👥</span><span>Max 8 players per clinic</span></div>
+        <div class="prog-meta-item"><span>📍</span><span>Indoor courts · Cave Creek, AZ</span></div>
+      </div>
+      <div class="prog-price">$40</div>
+      <div class="prog-price-note">Per player</div>
+      <a href="intro-clinic.html" class="prog-btn">Learn More & Sign Up →</a>
+    </div>
+
+    <div class="program-card featured">
+      <div class="prog-icon">⚡</div>
+      <div class="prog-name">Private Lessons</div>
+      <p class="prog-desc">1-on-1 or small group coaching from a pro player. Real drills, strategy, and game situations — personalized to your level.</p>
+      <div class="prog-meta">
+        <div class="prog-meta-item"><span>🎯</span><span>1-on-1 up to groups of 6</span></div>
+        <div class="prog-meta-item"><span>⏱</span><span>1 hr or 1.5 hr sessions</span></div>
+        <div class="prog-meta-item"><span>📍</span><span>Indoor courts · Cave Creek, AZ</span></div>
+      </div>
+      <div class="prog-price">$30+</div>
+      <div class="prog-price-note">Per person · flexible group sizes</div>
+      <a href="private-lessons.html" class="prog-btn">View Pricing & Book →</a>
+    </div>
+
+    <div class="program-card">
+      <div class="prog-icon">🏫</div>
+      <div class="prog-name">ESA Program</div>
+      <p class="prog-desc">Weekly youth pickleball classes by skill level for homeschool and online students. ESA families pay with their funds — zero out of pocket.</p>
+      <div class="prog-meta">
+        <div class="prog-meta-item"><span>📅</span><span>Tuesdays or Thursdays</span></div>
+        <div class="prog-meta-item"><span>👧</span><span>Beginner & Intermediate classes</span></div>
+        <div class="prog-meta-item"><span>✅</span><span>ESA funds accepted</span></div>
+      </div>
+      <div class="prog-price">$160</div>
+      <div class="prog-price-note">Per child · 4-week session</div>
+      <a href="esa-program.html" class="prog-btn">See Schedule & Enroll →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="fade-up">
+    <div class="section-label">Questions & Answers</div>
+    <h2>Frequently Asked<br>Questions</h2>
+    <p class="section-sub">Everything parents and players commonly ask before getting started.</p>
+  </div>
+  <div class="faq-layout fade-up">
+    <div>
+      <p style="font-size:0.88rem; color:var(--muted); line-height:1.7; font-weight:300; margin-bottom:1.5rem;">Don't see your question answered here? Send us an email and we'll get back to you quickly.</p>
+      <a href="mailto:desertpickleballacademy@gmail.com" class="btn-primary">Email Us</a>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Does my child have to be in the ESA program to join the youth classes?<i class="faq-icon">+</i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Not at all! The youth program is open to every child regardless of ESA enrollment. The only difference is how you pay — ESA families use their state funds at no out-of-pocket cost, while non-ESA families simply pay directly. Either way, your child gets the exact same pro coaching experience.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How do I know which skill level is right for my child?<i class="faq-icon">+</i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">If your child has never played or has only played a handful of times, Beginner is the right fit. If they've been playing regularly and understand the basic rules and scoring, Intermediate is a better match. Not sure? Just email us and we'll help you decide.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Do kids need to bring their own equipment?<i class="faq-icon">+</i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Paddles and balls are available for use during class. If your child has their own paddle, they're welcome to bring it. Comfortable athletic shoes with non-marking soles are required for the indoor courts.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Can adults take private lessons too?<i class="faq-icon">+</i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Private and group lessons are available for all ages and skill levels — from total beginners to competitive players looking to sharpen their game. Check out the Private Lessons page for full pricing options.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<div class="cert-bar">
+  <div class="cert-item">
+    <div class="cert-badge ppr">🎓</div>
+    <div class="cert-text"><div class="cert-name">PPR Certified Coach</div><div class="cert-detail">Professional Pickleball Registry · Coaching Certification</div></div>
+  </div>
+  <div class="cert-divider"></div>
+  <div class="cert-item">
+    <div class="cert-badge fpc">✅</div>
+    <div class="cert-text"><div class="cert-name">Fingerprint Clearance Card</div><div class="cert-detail">Arizona Dept. of Public Safety · Certified & Cleared</div></div>
+  </div>
+  <div class="cert-divider"></div>
+  <div class="cert-item">
+    <div class="cert-badge ppr" style="font-size:1.1rem;">🏆</div>
+    <div class="cert-text"><div class="cert-name">Professional Player</div><div class="cert-detail">Active Pro Competitor · Desert Pickleball Academy</div></div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="fade-up">
+      <div class="section-label">Get In Touch</div>
+      <h2>Contact Us</h2>
+      <p class="section-sub">Questions about a program? Ready to sign up? Reach out and we'll get back to you fast.</p>
+      <div style="margin-top:2.5rem;">
+        <div class="contact-detail">
+          <div class="ci-icon">✉️</div>
+          <div class="ci-text"><p>Email</p><p><a href="mailto:desertpickleballacademy@gmail.com">desertpickleballacademy@gmail.com</a></p></div>
+        </div>
+        <div class="contact-detail">
+          <div class="ci-icon">📍</div>
+          <div class="ci-text"><p>Location</p><p>Cave Creek, Arizona</p></div>
+        </div>
+        <div class="contact-detail">
+          <div class="ci-icon">🏓</div>
+          <div class="ci-text"><p>Facility</p><p>2 Indoor Courts — All Weather</p></div>
+        </div>
+        <div class="contact-detail">
+          <div class="ci-icon">📅</div>
+          <div class="ci-text"><p>ESA Classes</p><p>Tuesdays & Thursdays · 11AM–1PM</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form fade-up">
+      <div class="form-title">Send a Message</div>
+      <p class="form-sub">Fill this out and Cody will get back to you quickly.</p>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane" /></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith" /></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="jane@email.com" /></div>
+      <div class="form-group"><label>Phone (optional)</label><input type="tel" placeholder="(602) 555-0100" /></div>
+      <div class="form-group">
+        <label>I'm interested in</label>
+        <select>
+          <option value="">Select a program...</option>
+          <option>Intro Clinic</option>
+          <option>Private Lesson (1-on-1)</option>
+          <option>Group Lesson (2–6 players)</option>
+          <option>ESA Program – Beginner</option>
+          <option>ESA Program – Intermediate</option>
+          <option>Not sure yet — just exploring</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message</label><textarea placeholder="Tell us your experience level and what you're hoping to improve..."></textarea></div>
+      <button class="form-submit" onclick="handleSubmit(this)">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Desert Pickleball Academy</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="intro-clinic.html">Intro Clinic</a></li>
+    <li><a href="private-lessons.html">Private Lessons</a></li>
+    <li><a href="esa-program.html">ESA Program</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Desert Pickleball Academy · Cave Creek, AZ</p>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 40); });
+  document.body.classList.add('js-loaded');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+    document.querySelectorAll('.faq-answer.open').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-question.open').forEach(q => q.classList.remove('open'));
+    if (!isOpen) { answer.classList.add('open'); btn.classList.add('open'); }
+  }
+  function handleSubmit(btn) { btn.textContent = '✓ Message Sent!'; btn.style.background = '#7A8C6E'; btn.disabled = true; }
+</script>
+</body>
+</html>
