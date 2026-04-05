@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meet Cody – Desert Pickleball Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --sand:#F5EDD9; --clay:#C0561A; --rust:#E8743B; --dusk:#1A1410; --cream:#FBF7EE; --muted:#8A7B6A; --font-display:'Bebas Neue','Arial Narrow',Arial,sans-serif; --font-body:'DM Sans','Helvetica Neue',Arial,sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background:var(--cream); color:var(--dusk); font-family:var(--font-body); }
+
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 2.5rem; background:rgba(26,20,16,0.75); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,0.08); }
+    .nav-logo { font-family:var(--font-display); font-size:1.5rem; letter-spacing:0.08em; color:white; text-decoration:none; }
+    .nav-back { font-size:0.82rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.75); text-decoration:none; display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; }
+    .nav-back:hover { color:var(--rust); }
+
+    /* HERO */
+    .page-hero { min-height:70vh; position:relative; display:flex; align-items:flex-end; overflow:hidden; }
+    .hero-photo { position:absolute; inset:0; background:url('hero.jpeg') center 25% / cover no-repeat; }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(26,20,16,0.95) 0%, rgba(26,20,16,0.4) 60%, rgba(26,20,16,0.1) 100%); }
+    .hero-text { position:relative; z-index:1; padding:4rem 5vw; }
+    .page-eyebrow { font-size:0.75rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--rust); margin-bottom:0.8rem; }
+    h1 { font-family:var(--font-display); font-size:clamp(4rem,10vw,8rem); line-height:0.9; letter-spacing:0.02em; color:white; margin-bottom:1rem; }
+    h1 span { color:var(--rust); }
+    .hero-tagline { font-size:1rem; color:rgba(255,255,255,0.65); font-weight:300; max-width:500px; }
+
+    /* CONTENT */
+    .content { padding:5rem 5vw; }
+    .bio-layout { display:grid; grid-template-columns:1.2fr 1fr; gap:5vw; align-items:start; margin-bottom:5rem; }
+    h2 { font-family:var(--font-display); font-size:clamp(2rem,4vw,3rem); letter-spacing:0.04em; color:var(--dusk); margin-bottom:1rem; }
+    .bio-text { font-size:0.95rem; line-height:1.85; color:var(--muted); font-weight:300; }
+    .bio-text p + p { margin-top:1rem; }
+
+    /* Stats */
+    .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .stat-card { background:white; border:1px solid rgba(192,86,26,0.12); border-radius:6px; padding:1.4rem; }
+    .stat-val { font-family:var(--font-display); font-size:2.2rem; color:var(--clay); letter-spacing:0.04em; line-height:1; }
+    .stat-lbl { font-size:0.75rem; color:var(--muted); margin-top:0.3rem; font-weight:400; line-height:1.4; }
+
+    /* Awards */
+    .awards-section { margin-bottom:5rem; }
+    .awards-section h2 { margin-bottom:1.5rem; }
+    .awards-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+    .award-card { background:var(--dusk); border-radius:6px; overflow:hidden; }
+    .award-photo { height:220px; overflow:hidden; }
+    .award-photo img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+    .award-body { padding:1.2rem 1.4rem; }
+    .award-medal { font-size:1.5rem; margin-bottom:0.4rem; }
+    .award-title { font-family:var(--font-display); font-size:1.2rem; color:var(--sand); letter-spacing:0.04em; margin-bottom:0.2rem; }
+    .award-event { font-size:0.78rem; color:rgba(245,237,217,0.5); font-weight:300; }
+
+    /* Coaching photos */
+    .coaching-section { margin-bottom:5rem; }
+    .coaching-section h2 { margin-bottom:1.5rem; }
+    .coaching-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .coaching-photo { border-radius:6px; overflow:hidden; height:280px; }
+    .coaching-photo img { width:100%; height:100%; object-fit:cover; object-position:center; }
+
+    /* CTA */
+    .cta-box { background:var(--clay); border-radius:8px; padding:3rem; display:flex; justify-content:space-between; align-items:center; gap:2rem; flex-wrap:wrap; }
+    .cta-text h3 { font-family:var(--font-display); font-size:2.2rem; color:white; letter-spacing:0.04em; margin-bottom:0.4rem; }
+    .cta-text p { font-size:0.88rem; color:rgba(255,255,255,0.75); font-weight:300; }
+    .btn-white { display:inline-block; background:white; color:var(--clay); font-family:var(--font-body); font-size:0.85rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; padding:1rem 2.2rem; border-radius:2px; transition:background 0.2s,transform 0.2s; }
+    .btn-white:hover { background:var(--sand); transform:translateY(-2px); }
+    .btn-outline-white { display:inline-block; border:1.5px solid rgba(255,255,255,0.5); color:white; font-family:var(--font-body); font-size:0.85rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; padding:1rem 2.2rem; border-radius:2px; transition:border-color 0.2s; }
+    .btn-outline-white:hover { border-color:white; }
+    .cta-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+
+    footer { background:var(--dusk); padding:2rem 5vw; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-top:5rem; }
+    .footer-logo { font-family:var(--font-display); font-size:1.2rem; letter-spacing:0.08em; color:var(--sand); }
+    .footer-copy { font-size:0.78rem; color:rgba(245,237,217,0.4); }
+    .footer-links { display:flex; gap:1.5rem; list-style:none; }
+    .footer-links a { font-size:0.78rem; font-weight:500; text-transform:uppercase; letter-spacing:0.06em; color:rgba(245,237,217,0.5); text-decoration:none; }
+    .footer-links a:hover { color:var(--rust); }
+
+    @media (max-width:900px) { .bio-layout { grid-template-columns:1fr; } .awards-grid { grid-template-columns:1fr 1fr; } nav { padding:1rem 1.5rem; } }
+    @media (max-width:600px) { .awards-grid { grid-template-columns:1fr; } .coaching-grid { grid-template-columns:1fr; } .stats-grid { grid-template-columns:1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Desert Pickleball Academy</a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-photo"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <div class="page-eyebrow">Pro Player · Head Coach · Founder</div>
+    <h1>Meet<br><span>Cody Temple</span></h1>
+    <p class="hero-tagline">Phoenix-native, pro competitor, and the coach behind Desert Pickleball Academy.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="bio-layout">
+    <div>
+      <h2>The Story</h2>
+      <div class="bio-text">
+        <p>Hey, I'm Cody — founder of Desert Pickleball Academy. I grew up here in Phoenix and found pickleball a few years ago. Honestly, I fell in love with it right away. Within my first year of playing I realized I didn't just love competing — I had a real passion for coaching and helping others improve.</p>
+        <p>I've been playing for over 3 years and coaching for about 2, working with players of all ages and skill levels. I compete at the 5.0+ level and am currently playing in PPA Pro Qualifier events working toward the pro circuit. I'm also a signed player with the Phoenix Swarm in the UPL semi-pro league, and I've traveled across the country competing in PPA events in Utah, Nevada, California, Florida, Ohio, and Texas.</p>
+        <p>Along the way I've worked as a Head Pro at an indoor facility, running lessons and building structured programs — and I'm PPR certified. But more than anything, I focus on helping players actually improve in a way that's simple, clear, and fun.</p>
+        <p>I started Desert Pickleball Academy to create something I wish I had when I was learning — structured training, small groups, and a positive environment where kids and adults can build confidence, compete, and genuinely enjoy getting better.</p>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-val">3+</div><div class="stat-lbl">Years competing at high level</div></div>
+      <div class="stat-card"><div class="stat-val">2yr</div><div class="stat-lbl">Head Pro coaching experience</div></div>
+      <div class="stat-card"><div class="stat-val">5.0+</div><div class="stat-lbl">Competitive rating level</div></div>
+      <div class="stat-card"><div class="stat-val">UPL</div><div class="stat-lbl">Signed · Phoenix Swarm</div></div>
+      <div class="stat-card"><div class="stat-val">PPA</div><div class="stat-lbl">Pro Qualifier competitor</div></div>
+      <div class="stat-card"><div class="stat-val">PPR</div><div class="stat-lbl">Certified pickleball coach</div></div>
+    </div>
+  </div>
+
+  <div class="awards-section">
+    <h2>Tournament Results</h2>
+    <div class="awards-grid">
+      <div class="award-card">
+        <div class="award-photo"><img src="trophy.jpeg" alt="Gold medal Carvana Mesa Cup" /></div>
+        <div class="award-body"><div class="award-medal">🥇</div><div class="award-title">Gold Medal</div><div class="award-event">Carvana Mesa Cup</div></div>
+      </div>
+      <div class="award-card">
+        <div class="award-photo"><img src="award-silver.png" alt="Silver medal PPA Carvana Showcase" /></div>
+        <div class="award-body"><div class="award-medal">🥈</div><div class="award-title">Silver Medal</div><div class="award-event">PPA Carvana Showcase</div></div>
+      </div>
+      <div class="award-card">
+        <div class="award-photo"><img src="award-bronze.jpeg" alt="Bronze medal Carvana Masters" /></div>
+        <div class="award-body"><div class="award-medal">🥉</div><div class="award-title">Bronze Medal</div><div class="award-event">Carvana Masters · PPA Tour</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="coaching-section">
+    <h2>On The Court</h2>
+    <div class="coaching-grid">
+      <div class="coaching-photo"><img src="action1.jpeg" alt="Cody Temple competing in PPA event" /></div>
+      <div class="coaching-photo"><img src="coaching-kids.jpeg" alt="Cody coaching youth pickleball" /></div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>Ready to Train with Cody?</h3>
+      <p>Book a lesson or reach out with any questions — we'll get back to you fast.</p>
+    </div>
+    <div class="cta-btns">
+      <a href="index.html#programs" class="btn-white">View Programs</a>
+      <a href="mailto:desertpickleballacademy@gmail.com" class="btn-outline-white">Email Us</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Desert Pickleball Academy</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="private-lessons.html">Private Lessons</a></li>
+    <li><a href="esa-program.html">ESA Program</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Desert Pickleball Academy · Cave Creek, AZ</p>
+</footer>
+</body>
+</html>
