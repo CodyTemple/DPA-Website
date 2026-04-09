@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Junior Classes – Desert Pickleball Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --sand:#F5EDD9; --clay:#C0561A; --rust:#E8743B; --dusk:#1A1410; --cream:#FBF7EE; --muted:#8A7B6A; --green:#2E4A2B; --green-light:#7EC87A; --font-display:'Bebas Neue','Arial Narrow',Arial,sans-serif; --font-body:'DM Sans','Helvetica Neue',Arial,sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--dusk); font-family: var(--font-body); }
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 2.5rem; background:rgba(251,247,238,0.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(192,86,26,0.12); }
+    .nav-logo { font-family:var(--font-display); font-size:1.5rem; letter-spacing:0.08em; color:var(--clay); text-decoration:none; }
+    .nav-back { font-size:0.82rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; }
+    .nav-back:hover { color:var(--clay); }
+
+    .page-hero { padding:10rem 5vw 5rem; background:var(--green); position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 50% 80% at 90% 50%, rgba(126,200,122,0.12), transparent 70%); }
+    .page-hero-inner { position:relative; z-index:1; max-width:700px; }
+    .page-eyebrow { font-size:0.75rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-light); margin-bottom:0.8rem; }
+    h1 { font-family:var(--font-display); font-size:clamp(3.5rem,8vw,6.5rem); line-height:0.92; letter-spacing:0.03em; color:var(--sand); margin-bottom:1.4rem; }
+    h1 span { color:var(--green-light); }
+    .page-sub { font-size:1rem; line-height:1.75; color:rgba(245,237,217,0.7); font-weight:300; max-width:520px; }
+    .badge-row { display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:1.8rem; }
+    .badge { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(126,200,122,0.15); border:1px solid rgba(126,200,122,0.3); color:var(--green-light); font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:0.4rem 0.9rem; border-radius:20px; }
+    .badge-orange { background:rgba(192,86,26,0.2); border-color:rgba(232,116,59,0.4); color:var(--rust); }
+
+    .content { padding:5rem 5vw; }
+    h2 { font-family:var(--font-display); font-size:clamp(2rem,4vw,3rem); letter-spacing:0.04em; color:var(--dusk); margin-bottom:0.6rem; }
+    .section-intro { font-size:0.92rem; color:var(--muted); line-height:1.7; font-weight:300; margin-bottom:2.5rem; max-width:560px; }
+
+    /* Who can join */
+    .who-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:4rem; }
+    .who-card { border-radius:8px; padding:2rem; }
+    .who-card.esa { background:var(--dusk); }
+    .who-card.nonesa { background:white; border:1px solid rgba(192,86,26,0.12); }
+    .who-title { font-family:var(--font-display); font-size:1.6rem; letter-spacing:0.04em; margin-bottom:0.4rem; }
+    .who-card.esa .who-title { color:var(--green-light); }
+    .who-card.nonesa .who-title { color:var(--clay); }
+    .who-desc { font-size:0.85rem; line-height:1.7; font-weight:300; margin-bottom:1.2rem; }
+    .who-card.esa .who-desc { color:rgba(245,237,217,0.65); }
+    .who-card.nonesa .who-desc { color:var(--muted); }
+    .who-list { list-style:none; display:flex; flex-direction:column; gap:0.5rem; }
+    .who-list li { display:flex; align-items:flex-start; gap:0.6rem; font-size:0.83rem; line-height:1.5; }
+    .who-card.esa .who-list li { color:rgba(245,237,217,0.7); }
+    .who-card.nonesa .who-list li { color:var(--muted); }
+    .who-list li::before { content:'✓'; font-weight:700; flex-shrink:0; }
+    .who-card.esa .who-list li::before { color:var(--green-light); }
+    .who-card.nonesa .who-list li::before { color:var(--clay); }
+
+    /* Schedule */
+    .schedule-note { background:rgba(192,86,26,0.06); border:1px solid rgba(192,86,26,0.12); border-radius:6px; padding:1.2rem 1.5rem; margin-bottom:2rem; font-size:0.88rem; color:var(--muted); line-height:1.6; }
+    .schedule-note strong { color:var(--clay); font-weight:600; }
+    .schedule-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; }
+    .schedule-grid-coming { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:4rem; }
+    .schedule-day { border-radius:8px; overflow:hidden; border:1px solid rgba(192,86,26,0.12); }
+    .schedule-day.coming-soon-day { border-color:rgba(26,20,16,0.1); opacity:0.6; }
+    .schedule-day-header { background:var(--clay); padding:1.2rem 1.5rem; }
+    .schedule-day.coming-soon-day .schedule-day-header { background:var(--muted); }
+    .day-name { font-family:var(--font-display); font-size:2rem; letter-spacing:0.06em; color:white; line-height:1; }
+    .day-note { font-size:0.75rem; color:rgba(255,255,255,0.7); margin-top:0.2rem; }
+    .schedule-classes { background:white; padding:1rem; display:flex; flex-direction:column; gap:0.8rem; }
+    .class-row { border-radius:6px; padding:1rem 1.2rem; border:1px solid; }
+    .class-row.beginner { background:rgba(46,74,43,0.06); border-color:rgba(126,200,122,0.25); }
+    .class-row.intermediate { background:rgba(192,86,26,0.05); border-color:rgba(192,86,26,0.2); }
+    .class-row.advanced { background:rgba(26,20,16,0.03); border-color:rgba(26,20,16,0.1); opacity:0.55; }
+    .class-level { font-family:var(--font-display); font-size:1.3rem; letter-spacing:0.05em; margin-bottom:0.2rem; }
+    .class-row.beginner .class-level { color:var(--green); }
+    .class-row.intermediate .class-level { color:var(--clay); }
+    .class-row.advanced .class-level { color:var(--dusk); }
+    .class-time { font-size:0.85rem; color:var(--muted); font-weight:500; }
+    .class-spots { font-size:0.75rem; color:var(--muted); margin-top:0.2rem; font-weight:300; }
+    .coming-soon-tag { display:inline-block; font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); border:1px solid rgba(26,20,16,0.15); padding:0.2rem 0.6rem; border-radius:10px; margin-top:0.4rem; }
+    .coming-soon-label { background:rgba(26,20,16,0.05); border:1px solid rgba(26,20,16,0.1); border-radius:6px; padding:1.2rem; text-align:center; font-size:0.82rem; color:var(--muted); font-weight:500; letter-spacing:0.06em; text-transform:uppercase; }
+
+    /* Pricing box */
+    .pricing-box { background:var(--dusk); border-radius:8px; padding:2.5rem; margin-bottom:4rem; display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; }
+    .pricing-box-left h3 { font-family:var(--font-display); font-size:1.8rem; color:var(--sand); letter-spacing:0.04em; margin-bottom:0.5rem; }
+    .pricing-box-left p { font-size:0.85rem; color:rgba(245,237,217,0.6); line-height:1.7; font-weight:300; }
+    .price-big { font-family:var(--font-display); font-size:5rem; color:var(--rust); letter-spacing:0.03em; line-height:1; }
+    .price-desc { font-size:0.82rem; color:rgba(245,237,217,0.5); margin-top:0.3rem; font-weight:300; }
+
+    /* CTA */
+    .cta-box { background:var(--green); border-radius:8px; padding:3rem; display:flex; justify-content:space-between; align-items:center; gap:2rem; flex-wrap:wrap; }
+    .cta-text h3 { font-family:var(--font-display); font-size:2.2rem; color:var(--sand); letter-spacing:0.04em; margin-bottom:0.4rem; }
+    .cta-text p { font-size:0.88rem; color:rgba(245,237,217,0.65); font-weight:300; }
+    .cta-actions { display:flex; gap:1rem; flex-wrap:wrap; }
+    .btn-primary { display:inline-block; background:var(--clay); color:white; font-family:var(--font-body); font-size:0.85rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; padding:1rem 2.2rem; border-radius:2px; transition:background 0.2s,transform 0.2s; }
+    .btn-primary:hover { background:var(--rust); transform:translateY(-2px); }
+    .btn-outline { display:inline-block; border:1.5px solid rgba(245,237,217,0.35); color:rgba(245,237,217,0.8); font-family:var(--font-body); font-size:0.85rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; padding:1rem 2.2rem; border-radius:2px; transition:border-color 0.2s,color 0.2s; }
+    .btn-outline:hover { border-color:var(--sand); color:var(--sand); }
+
+    .waiver-callout { background:white; border:2px solid var(--clay); border-radius:8px; padding:1.8rem 2rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+    .waiver-callout-icon { font-size:2rem; flex-shrink:0; }
+    .waiver-callout-text { flex:1; min-width:200px; }
+    .waiver-callout-title { font-family:var(--font-display); font-size:1.3rem; letter-spacing:0.04em; color:var(--clay); margin-bottom:0.3rem; }
+    .waiver-callout-desc { font-size:0.85rem; color:var(--muted); line-height:1.6; font-weight:300; }
+    .waiver-btn { display:inline-block; background:var(--clay); color:white; font-family:var(--font-body); font-size:0.85rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; padding:1rem 1.8rem; border-radius:2px; transition:background 0.2s,transform 0.2s; white-space:nowrap; flex-shrink:0; }
+    .waiver-btn:hover { background:var(--rust); transform:translateY(-2px); }
+
+    footer { background:var(--dusk); padding:2rem 5vw; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-top:5rem; }
+    .footer-logo { font-family:var(--font-display); font-size:1.2rem; letter-spacing:0.08em; color:var(--sand); }
+    .footer-copy { font-size:0.78rem; color:rgba(245,237,217,0.4); }
+    .footer-links { display:flex; gap:1.5rem; list-style:none; align-items:center; }
+    .footer-links a { font-size:0.78rem; font-weight:500; text-transform:uppercase; letter-spacing:0.06em; color:rgba(245,237,217,0.5); text-decoration:none; }
+    .footer-links a:hover { color:var(--rust); }
+    .footer-social { display:flex; gap:0.8rem; align-items:center; }
+    .footer-social-link { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(245,237,217,0.08); color:rgba(245,237,217,0.5); text-decoration:none; transition:background 0.2s,color 0.2s; }
+    .footer-social-link:hover { background:var(--clay); color:white; }
+    .footer-social-link svg { width:15px; height:15px; fill:currentColor; }
+
+    @media (max-width:900px) { .who-grid { grid-template-columns:1fr; } .schedule-grid { grid-template-columns:1fr; } .schedule-grid-coming { grid-template-columns:1fr; } .pricing-box { grid-template-columns:1fr; gap:1.5rem; } nav { padding:1rem 1.5rem; } }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Desert Pickleball Academy</a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Youth Program · Cave Creek, AZ</div>
+    <h1>Junior<br><span>Classes</span></h1>
+    <p class="page-sub">Weekly group pickleball classes for youth — organized by skill level. Twice a week, every week for a full month. ESA families pay with their funds. Everyone else is welcome too.</p>
+    <div class="badge-row">
+      <span class="badge">✅ ESA Funds Accepted</span>
+      <span class="badge-orange badge">$160 / 4-Week Session</span>
+      <span class="badge">8 Lessons Total</span>
+      <span class="badge">Max 10 Students</span>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <h2>Who Can Join?</h2>
+  <p class="section-intro">You don't need to be in Arizona's ESA program to participate. Here's how it works for both types of families.</p>
+  <div class="who-grid">
+    <div class="who-card esa">
+      <div class="who-title">ESA Families</div>
+      <p class="who-desc">If your child participates in Arizona's Empowerment Scholarship Account program, you can use your ESA funds to cover tuition — no out-of-pocket cost.</p>
+      <ul class="who-list">
+        <li>Use ESA funds to pay — $0 out of pocket</li>
+        <li>Same great coaching as everyone else</li>
+        <li>Counts toward your child's educational activities</li>
+      </ul>
+    </div>
+    <div class="who-card nonesa">
+      <div class="who-title">All Other Families</div>
+      <p class="who-desc">Your child doesn't need to be ESA-enrolled to join. Non-ESA families simply pay the session fee directly — same program, same courts, same coach.</p>
+      <ul class="who-list">
+        <li>Open to any youth student</li>
+        <li>Pay directly — $160 per child per session</li>
+        <li>No ESA account required</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Class Schedule</h2>
+  <div class="schedule-note"><strong>Twice a week — Mondays & Wednesdays.</strong> Your child attends both days each week for 4 weeks — 8 lessons total. Beginner class runs 11AM–12PM, Intermediate runs 12PM–1PM. Tuesday & Thursday sessions are coming soon.</div>
+
+  <div class="schedule-grid">
+    <div class="schedule-day">
+      <div class="schedule-day-header">
+        <div class="day-name">Monday</div>
+        <div class="day-note">Active — now enrolling</div>
+      </div>
+      <div class="schedule-classes">
+        <div class="class-row beginner">
+          <div class="class-level">Beginner</div>
+          <div class="class-time">11:00 AM – 12:00 PM</div>
+          <div class="class-spots">Max 10 students · Indoor courts</div>
+        </div>
+        <div class="class-row intermediate">
+          <div class="class-level">Intermediate</div>
+          <div class="class-time">12:00 PM – 1:00 PM</div>
+          <div class="class-spots">Max 10 students · Indoor courts</div>
+        </div>
+        <div class="class-row advanced">
+          <div class="class-level">Advanced</div>
+          <div class="class-time">TBD</div>
+          <span class="coming-soon-tag">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+    <div class="schedule-day">
+      <div class="schedule-day-header">
+        <div class="day-name">Wednesday</div>
+        <div class="day-note">Active — now enrolling</div>
+      </div>
+      <div class="schedule-classes">
+        <div class="class-row beginner">
+          <div class="class-level">Beginner</div>
+          <div class="class-time">11:00 AM – 12:00 PM</div>
+          <div class="class-spots">Max 10 students · Indoor courts</div>
+        </div>
+        <div class="class-row intermediate">
+          <div class="class-level">Intermediate</div>
+          <div class="class-time">12:00 PM – 1:00 PM</div>
+          <div class="class-spots">Max 10 students · Indoor courts</div>
+        </div>
+        <div class="class-row advanced">
+          <div class="class-level">Advanced</div>
+          <div class="class-time">TBD</div>
+          <span class="coming-soon-tag">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="schedule-grid-coming">
+    <div class="schedule-day coming-soon-day">
+      <div class="schedule-day-header">
+        <div class="day-name">Tuesday</div>
+        <div class="day-note">Coming soon</div>
+      </div>
+      <div class="schedule-classes">
+        <div class="coming-soon-label">🕐 Not Yet Available — Check Back Soon</div>
+      </div>
+    </div>
+    <div class="schedule-day coming-soon-day">
+      <div class="schedule-day-header">
+        <div class="day-name">Thursday</div>
+        <div class="day-note">Coming soon</div>
+      </div>
+      <div class="schedule-classes">
+        <div class="coming-soon-label">🕐 Not Yet Available — Check Back Soon</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pricing-box">
+    <div class="pricing-box-left">
+      <h3>Session Pricing</h3>
+      <p>One session = 8 lessons total. Your child attends twice per week (Monday & Wednesday) for a full month — 4 weeks, 2 lessons per week.</p>
+      <ul class="who-list" style="margin-top:1.2rem;">
+        <li style="color:rgba(245,237,217,0.7);">1 session = 8 lessons (2 per week)</li>
+        <li style="color:rgba(245,237,217,0.7);">1 hour per class</li>
+        <li style="color:rgba(245,237,217,0.7);">Max 10 students per class</li>
+        <li style="color:rgba(245,237,217,0.7);">Indoor courts in Cave Creek</li>
+        <li style="color:rgba(245,237,217,0.7);">ESA funds accepted or pay directly</li>
+      </ul>
+    </div>
+    <div>
+      <div class="price-big">$160</div>
+      <div class="price-desc">Per child · per 4-week session<br>= $20 per lesson · 8 lessons total</div>
+    </div>
+  </div>
+
+  <div class="waiver-callout">
+    <div class="waiver-callout-icon">📋</div>
+    <div class="waiver-callout-text">
+      <p class="waiver-callout-title">Required before first session</p>
+      <p class="waiver-callout-desc">All participants must have a completed waiver on file before stepping on the court. Takes about 2 minutes to fill out.</p>
+    </div>
+    <a href="https://forms.gle/aXwRNBWhUW5TQP6eA" target="_blank" rel="noopener" class="waiver-btn">Complete Waiver & Register →</a>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>Ready to Enroll?</h3>
+      <p>Fill out the waiver form above, then email us to confirm your spot. We'll get back to you fast.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="mailto:desertpickleballacademy@gmail.com" class="btn-primary">Email to Enroll</a>
+      <a href="index.html#contact" class="btn-outline">Send a Message</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Desert Pickleball Academy</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="intro-clinic.html">Intro Clinic</a></li>
+    <li><a href="private-lessons.html">Private Lessons</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/cody__temple/" target="_blank" rel="noopener" class="footer-social-link" title="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=100071701856594" target="_blank" rel="noopener" class="footer-social-link" title="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+  </div>
+  <p class="footer-copy">© 2025 Desert Pickleball Academy · Cave Creek, AZ</p>
+</footer>
+</body>
+</html>
