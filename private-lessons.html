@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Private Lessons – Desert Pickleball Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --sand:#F5EDD9; --clay:#C0561A; --rust:#E8743B; --dusk:#1A1410; --cream:#FBF7EE; --muted:#8A7B6A; --font-display:'Bebas Neue','Arial Narrow',Arial,sans-serif; --font-body:'DM Sans','Helvetica Neue',Arial,sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--dusk); font-family: var(--font-body); }
+    nav { position: fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 2.5rem; background:rgba(251,247,238,0.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(192,86,26,0.12); }
+    .nav-logo { font-family:var(--font-display); font-size:1.5rem; letter-spacing:0.08em; color:var(--clay); text-decoration:none; }
+    .nav-back { font-size:0.82rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; }
+    .nav-back:hover { color:var(--clay); }
+
+    .page-hero { padding: 10rem 5vw 5rem; background: var(--dusk); position: relative; overflow: hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 60% 100% at 100% 50%, rgba(232,116,59,0.12), transparent 70%); }
+    .page-hero-inner { position:relative; z-index:1; max-width:700px; }
+    .page-eyebrow { font-size:0.75rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--rust); margin-bottom:0.8rem; }
+    h1 { font-family:var(--font-display); font-size:clamp(3.5rem,8vw,6.5rem); line-height:0.92; letter-spacing:0.03em; color:var(--sand); margin-bottom:1.4rem; }
+    h1 span { color:var(--rust); }
+    .page-sub { font-size:1rem; line-height:1.75; color:rgba(245,237,217,0.65); font-weight:300; max-width:520px; }
+
+    .content { padding: 5rem 5vw; }
+    h2 { font-family:var(--font-display); font-size:clamp(2rem,4vw,3rem); letter-spacing:0.04em; color:var(--dusk); margin-bottom:0.6rem; }
+    .section-intro { font-size:0.92rem; color:var(--muted); line-height:1.7; font-weight:300; margin-bottom:2.5rem; max-width:560px; }
+
+    /* Pricing grid */
+    .pricing-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; margin-bottom:4rem; }
+    .pricing-card { background:white; border:1px solid rgba(192,86,26,0.12); border-radius:8px; overflow:hidden; }
+    .pricing-card-header { background:var(--clay); padding:1.4rem 1.5rem; }
+    .pricing-card.solo .pricing-card-header { background: var(--dusk); }
+    .pricing-format { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.06em; color:white; line-height:1; }
+    .pricing-format-sub { font-size:0.75rem; color:rgba(255,255,255,0.65); margin-top:0.3rem; font-weight:300; }
+    .pricing-options { padding:1.2rem 1.5rem; display:flex; flex-direction:column; gap:0; }
+    .pricing-row { display:flex; justify-content:space-between; align-items:center; padding:0.85rem 0; border-bottom:1px solid rgba(192,86,26,0.07); }
+    .pricing-row:last-child { border-bottom:none; }
+    .pricing-duration { font-size:0.82rem; font-weight:500; color:var(--muted); }
+    .pricing-amount { font-family:var(--font-display); font-size:1.8rem; color:var(--clay); letter-spacing:0.03em; line-height:1; }
+    .pricing-amount span { font-family:var(--font-body); font-size:0.7rem; color:var(--muted); font-weight:400; }
+
+    /* What to expect */
+    .expect-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:4rem; }
+    .expect-card { background:white; border:1px solid rgba(192,86,26,0.1); border-radius:6px; padding:1.6rem; }
+    .expect-num { font-family:var(--font-display); font-size:2.5rem; color:rgba(192,86,26,0.15); letter-spacing:0.04em; line-height:1; margin-bottom:0.5rem; }
+    .expect-title { font-size:0.88rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--clay); margin-bottom:0.5rem; }
+    .expect-desc { font-size:0.85rem; color:var(--muted); line-height:1.7; font-weight:300; }
+
+    /* CTA */
+    .cta-box { background:var(--dusk); border-radius:8px; padding:3rem; display:flex; justify-content:space-between; align-items:center; gap:2rem; flex-wrap:wrap; }
+    .cta-text h3 { font-family:var(--font-display); font-size:2.2rem; color:var(--sand); letter-spacing:0.04em; margin-bottom:0.4rem; }
+    .cta-text p { font-size:0.88rem; color:rgba(245,237,217,0.6); font-weight:300; }
+    .cta-actions { display:flex; gap:1rem; flex-wrap:wrap; }
+    .btn-primary { display:inline-block; background:var(--clay); color:white; font-family:var(--font-body); font-size:0.85rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; padding:1rem 2.2rem; border-radius:2px; transition:background 0.2s, transform 0.2s; }
+    .btn-primary:hover { background:var(--rust); transform:translateY(-2px); }
+    .btn-outline { display:inline-block; border:1.5px solid rgba(245,237,217,0.35); color:rgba(245,237,217,0.8); font-family:var(--font-body); font-size:0.85rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; padding:1rem 2.2rem; border-radius:2px; transition:border-color 0.2s, color 0.2s; }
+    .btn-outline:hover { border-color:var(--sand); color:var(--sand); }
+
+    footer { background:var(--dusk); padding:2rem 5vw; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-top:5rem; }
+    .footer-logo { font-family:var(--font-display); font-size:1.2rem; letter-spacing:0.08em; color:var(--sand); }
+    .footer-copy { font-size:0.78rem; color:rgba(245,237,217,0.4); }
+    .footer-links { display:flex; gap:1.5rem; list-style:none; align-items:center; }
+    .footer-links a { font-size:0.78rem; font-weight:500; text-transform:uppercase; letter-spacing:0.06em; color:rgba(245,237,217,0.5); text-decoration:none; }
+    .footer-links a:hover { color:var(--rust); }
+    .footer-social { display:flex; gap:0.8rem; align-items:center; }
+    .footer-social-link { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(245,237,217,0.08); color:rgba(245,237,217,0.5); text-decoration:none; transition:background 0.2s,color 0.2s; }
+    .footer-social-link:hover { background:var(--clay); color:white; }
+    .footer-social-link svg { width:15px; height:15px; fill:currentColor; }
+
+    @media (max-width:900px) { .pricing-grid { grid-template-columns:1fr 1fr; } .expect-grid { grid-template-columns:1fr; } nav { padding:1rem 1.5rem; } }
+    @media (max-width:580px) { .pricing-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Desert Pickleball Academy</a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Pro Coaching · Cave Creek, AZ</div>
+    <h1>Private<br><span>Lessons</span></h1>
+    <p class="page-sub">1-on-1 or up to groups of 6 coached by a 5.0+ competitive player and PPR certified coach. Tailored to your skill level, focused on real improvement — not just hitting balls.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <h2>Session Pricing</h2>
+  <p class="section-intro">Choose your group size and session length. All formats are pro-coached on our indoor courts in Cave Creek.</p>
+
+  <div class="pricing-grid">
+    <div class="pricing-card solo">
+      <div class="pricing-card-header">
+        <div class="pricing-format">1-on-1</div>
+        <div class="pricing-format-sub">Fully private · just you and Cody</div>
+      </div>
+      <div class="pricing-options">
+        <div class="pricing-row"><span class="pricing-duration">1 Hour</span><span class="pricing-amount">$75 <span>/ person</span></span></div>
+        <div class="pricing-row"><span class="pricing-duration">1.5 Hours</span><span class="pricing-amount">$110 <span>/ person</span></span></div>
+      </div>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-card-header">
+        <div class="pricing-format">2-on-1</div>
+        <div class="pricing-format-sub">Two players · great for partners</div>
+      </div>
+      <div class="pricing-options">
+        <div class="pricing-row"><span class="pricing-duration">1 Hour</span><span class="pricing-amount">$55 <span>/ person</span></span></div>
+        <div class="pricing-row"><span class="pricing-duration">1.5 Hours</span><span class="pricing-amount">$75 <span>/ person</span></span></div>
+      </div>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-card-header">
+        <div class="pricing-format">3-on-1</div>
+        <div class="pricing-format-sub">Three players · shared court time</div>
+      </div>
+      <div class="pricing-options">
+        <div class="pricing-row"><span class="pricing-duration">1 Hour</span><span class="pricing-amount">$40 <span>/ person</span></span></div>
+        <div class="pricing-row"><span class="pricing-duration">1.5 Hours</span><span class="pricing-amount">$60 <span>/ person</span></span></div>
+      </div>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-card-header">
+        <div class="pricing-format">Group</div>
+        <div class="pricing-format-sub">4 to 6 players · max group size</div>
+      </div>
+      <div class="pricing-options">
+        <div class="pricing-row"><span class="pricing-duration">1 Hour</span><span class="pricing-amount">$30 <span>/ person</span></span></div>
+        <div class="pricing-row"><span class="pricing-duration">1.5 Hours</span><span class="pricing-amount">$45 <span>/ person</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>What to Expect</h2>
+  <p class="section-intro">Every session follows a structure so you actually improve, not just rally.</p>
+  <div class="expect-grid">
+    <div class="expect-card"><div class="expect-num">01</div><div class="expect-title">Discovery</div><div class="expect-desc">We start by talking through your experience, what feels hardest, and what you want to get out of the session. This shapes everything that follows.</div></div>
+    <div class="expect-card"><div class="expect-num">02</div><div class="expect-title">Fundamentals Drills</div><div class="expect-desc">Focused reps on 1–2 core skills based on your level. Grip, positioning, dinking, third-shot drops — one thing done well beats five things done halfway.</div></div>
+    <div class="expect-card"><div class="expect-num">03</div><div class="expect-title">Game Situations</div><div class="expect-desc">Drills that replicate real game scenarios so what you're learning actually translates onto the court when it matters.</div></div>
+    <div class="expect-card"><div class="expect-num">04</div><div class="expect-title">Recap & Next Steps</div><div class="expect-desc">We close every session by reviewing what improved — specifically — and what to focus on next. You leave with a clear picture of your progress.</div></div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>Ready to Book?</h3>
+      <p>Email us with your preferred group size, session length, and availability and we'll get you scheduled fast.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="/cdn-cgi/l/email-protection#d9bdbcaabcabada9b0bab2b5bcbbb8b5b5b8bab8bdbcb4a099beb4b8b0b5f7bab6b4" class="btn-primary">Email to Book</a>
+      <a href="index.html#contact" class="btn-outline">Send a Message</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Desert Pickleball Academy</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="intro-clinic.html">Intro Clinic</a></li>
+    <li><a href="esa-program.html">Junior Classes</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/cody__temple/" target="_blank" rel="noopener" class="footer-social-link" title="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=100071701856594" target="_blank" rel="noopener" class="footer-social-link" title="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+  </div>
+  <p class="footer-copy">© 2025 Desert Pickleball 
