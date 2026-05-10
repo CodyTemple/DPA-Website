@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Junior Summer Camp — Desert Pickleball Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sand:#F5EDD9; --clay:#C0561A; --rust:#E8743B; --amber:#F5A623;
+      --dusk:#1A1410; --cream:#FBF7EE; --muted:#8A7B6A; --white:#FFFFFF;
+      --border:rgba(192,86,26,0.12);
+      --font-display:'Bebas Neue','Arial Narrow',Arial,sans-serif;
+      --font-body:'DM Sans','Helvetica Neue',Arial,sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--white); color:var(--dusk); font-family:var(--font-body); overflow-x:hidden; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 2.5rem; background:rgba(26,20,16,0.55); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,0.07); transition:all 0.3s; }
+    nav.scrolled { background:rgba(255,255,255,0.97); border-bottom:1px solid var(--border); }
+    .nav-logo { font-family:var(--font-display); font-size:1.5rem; letter-spacing:0.08em; color:white; text-decoration:none; transition:color 0.3s; }
+    nav.scrolled .nav-logo { color:var(--clay); }
+    .nav-links { display:flex; gap:1.6rem; list-style:none; align-items:center; }
+    .nav-links a { font-size:0.82rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.85); text-decoration:none; transition:color 0.2s; }
+    nav.scrolled .nav-links a { color:var(--dusk); }
+    .nav-links a:hover { color:var(--rust); }
+    .nav-cta { background:var(--clay) !important; color:white !important; padding:0.5rem 1.2rem; border-radius:2px; }
+    .nav-cta:hover { background:var(--rust) !important; }
+
+    /* HERO */
+    .camp-hero { min-height:100vh; position:relative; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden; }
+    .hero-photo { position:absolute; inset:0; background:url('coaching-kids.jpeg') center 25%/cover no-repeat; }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(0deg, rgba(26,20,16,0.92) 0%, rgba(26,20,16,0.5) 45%, rgba(26,20,16,0.1) 100%); }
+    .hero-content { position:relative; z-index:2; padding:0 5vw 5rem; max-width:900px; }
+
+    .hero-badge { display:inline-flex; align-items:center; gap:0.5rem; background:var(--rust); color:white; font-size:0.72rem; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; padding:0.4rem 0.9rem; border-radius:2px; margin-bottom:1.4rem; }
+    .hero-badge::before { content:'☀️'; font-size:0.9rem; }
+
+    h1.hero-h1 { font-family:var(--font-display); font-size:clamp(5rem,13vw,10rem); line-height:0.87; letter-spacing:0.01em; color:white; margin-bottom:1.6rem; }
+    h1.hero-h1 em { color:var(--amber); font-style:normal; }
+
+    .hero-pills { display:flex; gap:0.7rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .hero-pill { display:inline-flex; align-items:center; gap:0.45rem; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.18); color:rgba(255,255,255,0.85); font-size:0.8rem; font-weight:500; padding:0.45rem 0.95rem; border-radius:30px; backdrop-filter:blur(6px); }
+    .hero-pill .dot { width:6px; height:6px; border-radius:50%; background:var(--amber); flex-shrink:0; }
+
+    .hero-btns { display:flex; gap:0.9rem; flex-wrap:wrap; }
+    .btn-primary-camp { display:inline-flex; align-items:center; gap:0.5rem; background:var(--rust); color:white; font-family:var(--font-body); font-size:0.88rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; padding:1rem 2.2rem; border-radius:3px; transition:background 0.2s, transform 0.15s; }
+    .btn-primary-camp:hover { background:var(--clay); transform:translateY(-2px); }
+    .btn-ghost-camp { display:inline-block; border:1.5px solid rgba(255,255,255,0.35); color:rgba(255,255,255,0.85); font-family:var(--font-body); font-size:0.88rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; padding:1rem 1.8rem; border-radius:3px; transition:border-color 0.2s, background 0.2s; }
+    .btn-ghost-camp:hover { border-color:white; color:white; background:rgba(255,255,255,0.08); }
+
+    /* STATS BAR */
+    .stats-bar { display:grid; grid-template-columns:repeat(4,1fr); background:var(--dusk); border-bottom:3px solid var(--rust); }
+    .stat-cell { padding:1.6rem 1.8rem; border-right:1px solid rgba(255,255,255,0.07); display:flex; flex-direction:column; gap:0.25rem; }
+    .stat-cell:last-child { border-right:none; }
+    .stat-cell-label { font-size:0.65rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(245,237,217,0.4); }
+    .stat-cell-value { font-family:var(--font-display); font-size:2rem; color:white; letter-spacing:0.04em; line-height:1; }
+    .stat-cell-sub { font-size:0.76rem; color:var(--rust); font-weight:500; }
+
+    /* ABOUT */
+    #about-camp { padding:6rem 5vw; background:var(--white); }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:6vw; align-items:center; }
+
+    .photo-bubble-wrap { position:relative; padding-bottom:3rem; padding-right:2rem; }
+    .photo-bubble-main { width:100%; aspect-ratio:4/5; border-radius:200px 200px 24px 24px; overflow:hidden; position:relative; }
+    .photo-bubble-main img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+    .photo-bubble-accent { position:absolute; bottom:0; right:0; width:160px; height:160px; border-radius:50%; overflow:hidden; border:5px solid var(--white); box-shadow:0 12px 40px rgba(26,20,16,0.18); }
+    .photo-bubble-accent img { width:100%; height:100%; object-fit:cover; object-position:center 25%; }
+    .fun-tag { position:absolute; top:1.5rem; left:-0.8rem; background:var(--amber); color:var(--dusk); font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:0.4rem 0.9rem; border-radius:2px; transform:rotate(-2deg); box-shadow:0 4px 16px rgba(245,166,35,0.35); }
+
+    .section-label { font-size:0.72rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--clay); margin-bottom:0.6rem; }
+    h2 { font-family:var(--font-display); font-size:clamp(2.8rem,5vw,4.2rem); letter-spacing:0.02em; line-height:0.95; color:var(--dusk); margin-bottom:1rem; }
+    .section-sub { font-size:1rem; line-height:1.8; color:var(--muted); font-weight:300; margin-bottom:1.8rem; }
+
+    .goals-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; margin-top:0.5rem; }
+    .goal-chip { display:flex; align-items:flex-start; gap:0.7rem; background:var(--cream); border:1px solid var(--border); border-radius:8px; padding:0.9rem 1rem; font-size:0.83rem; color:var(--dusk); font-weight:400; line-height:1.45; }
+    .goal-chip-icon { font-size:1rem; flex-shrink:0; margin-top:0.05rem; }
+
+    /* CURRICULUM */
+    #curriculum { padding:6rem 5vw; background:var(--cream); }
+    .curriculum-intro { margin-bottom:3rem; }
+    .day-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.4rem; }
+    .day-card { background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:transform 0.22s, box-shadow 0.22s; }
+    .day-card:hover { transform:translateY(-5px); box-shadow:0 20px 60px rgba(192,86,26,0.1); }
+    .day-card-header { padding:1.5rem 1.8rem 1.2rem; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:flex-start; }
+    .day-num-tag { font-size:0.65rem; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; color:var(--rust); }
+    .day-title { font-family:var(--font-display); font-size:1.8rem; letter-spacing:0.03em; color:var(--dusk); line-height:1; }
+    .day-emoji { font-size:2rem; }
+    .day-card-body { padding:1.4rem 1.8rem 1.6rem; }
+    .day-focus { font-size:0.84rem; color:var(--muted); font-weight:300; line-height:1.65; margin-bottom:1.2rem; font-style:italic; }
+    .day-activities { display:flex; flex-direction:column; gap:0.4rem; margin-bottom:1.2rem; }
+    .day-act { display:flex; align-items:flex-start; gap:0.6rem; font-size:0.82rem; color:var(--dusk); line-height:1.4; }
+    .day-act::before { content:'→'; color:var(--rust); font-size:0.72rem; flex-shrink:0; margin-top:0.18em; font-weight:700; }
+    .skill-tags { display:flex; flex-wrap:wrap; gap:0.45rem; }
+    .skill-tag { background:rgba(232,116,59,0.08); border:1px solid rgba(232,116,59,0.2); color:var(--clay); font-size:0.7rem; font-weight:600; letter-spacing:0.04em; padding:0.22rem 0.6rem; border-radius:20px; }
+
+    /* PHOTO STRIP */
+    .photo-strip { position:relative; height:380px; overflow:hidden; }
+    .photo-strip img { width:100%; height:100%; object-fit:cover; object-position:center 35%; display:block; }
+    .photo-strip-overlay { position:absolute; inset:0; background:linear-gradient(90deg, rgba(26,20,16,0.8) 0%, rgba(26,20,16,0.25) 50%, rgba(26,20,16,0.8) 100%); display:flex; align-items:center; justify-content:center; }
+    .photo-strip-big { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,5rem); color:white; letter-spacing:0.1em; line-height:1; text-align:center; }
+    .photo-strip-big span { color:var(--amber); }
+    .photo-strip-sub { font-size:0.83rem; color:rgba(255,255,255,0.6); margin-top:0.5rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:300; text-align:center; }
+
+    /* SCHEDULE + SIGNUP */
+    #signup { padding:6rem 5vw; background:var(--white); }
+    .schedule-signup-grid { display:grid; grid-template-columns:1fr 1fr; gap:5vw; align-items:start; }
+    .schedule-block h3 { font-family:var(--font-display); font-size:2.2rem; letter-spacing:0.04em; color:var(--dusk); margin-bottom:0.4rem; line-height:1; }
+    .schedule-block p { font-size:0.88rem; color:var(--muted); font-weight:300; line-height:1.65; margin-bottom:2rem; }
+    .sched-list { display:flex; flex-direction:column; }
+    .sched-row { display:flex; gap:1.2rem; padding:1rem 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+    .sched-row:last-child { border-bottom:none; }
+    .sched-time { font-family:var(--font-display); font-size:1.1rem; letter-spacing:0.05em; color:var(--rust); flex-shrink:0; width:80px; }
+    .sched-text strong { display:block; font-size:0.88rem; font-weight:600; color:var(--dusk); }
+    .sched-text span { font-size:0.78rem; color:var(--muted); font-weight:300; line-height:1.5; }
+
+    /* Signup card */
+    .signup-card { background:var(--dusk); border-radius:16px; padding:2.5rem; position:sticky; top:100px; overflow:hidden; }
+    .signup-card::before { content:''; position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle, rgba(232,116,59,0.15), transparent 70%); pointer-events:none; }
+    .signup-card-eyebrow { font-size:0.68rem; font-weight:800; letter-spacing:0.18em; text-transform:uppercase; color:var(--rust); margin-bottom:0.5rem; }
+    .signup-card-title { font-family:var(--font-display); font-size:2.6rem; color:white; letter-spacing:0.04em; line-height:0.95; margin-bottom:0.4rem; }
+    .signup-card-sub { font-size:0.84rem; color:rgba(245,237,217,0.55); font-weight:300; line-height:1.65; margin-bottom:1.8rem; }
+    .signup-price { font-family:var(--font-display); font-size:4.5rem; color:white; letter-spacing:0.04em; line-height:1; }
+    .signup-price-note { font-size:0.76rem; color:rgba(245,237,217,0.4); margin-bottom:2rem; margin-top:0.2rem; }
+    .signup-details { display:flex; flex-direction:column; gap:0.65rem; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid rgba(245,237,217,0.08); }
+    .signup-row { display:flex; align-items:center; gap:0.8rem; font-size:0.83rem; color:rgba(245,237,217,0.7); font-weight:300; }
+    .signup-row-icon { font-size:1rem; flex-shrink:0; }
+    .btn-register { display:block; text-align:center; background:var(--rust); color:white; font-family:var(--font-body); font-size:0.9rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; padding:1.15rem 1.5rem; border-radius:4px; transition:background 0.2s, transform 0.15s; }
+    .btn-register:hover { background:var(--clay); transform:translateY(-1px); }
+    .signup-no-esa { text-align:center; font-size:0.73rem; color:rgba(245,237,217,0.3); font-weight:300; line-height:1.6; margin-top:1.2rem; }
+    .signup-no-esa strong { color:rgba(245,237,217,0.5); font-weight:500; }
+
+    /* BRING */
+    #bring { padding:5rem 5vw; background:var(--cream); }
+    .bring-grid { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; margin-top:2.5rem; align-items:start; }
+    .bring-card { background:var(--white); border:1px solid var(--border); border-radius:12px; padding:2rem 2.2rem; }
+    .bring-card-title { font-family:var(--font-display); font-size:1.7rem; letter-spacing:0.04em; color:var(--dusk); margin-bottom:1.2rem; }
+    .bring-list { display:flex; flex-direction:column; gap:0.75rem; }
+    .bring-item { display:flex; align-items:center; gap:0.9rem; font-size:0.87rem; color:var(--dusk); }
+    .bring-icon-wrap { width:36px; height:36px; border-radius:8px; background:rgba(232,116,59,0.09); display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+
+    .notice-card { background:var(--dusk); border-radius:12px; padding:2rem 2.2rem; display:flex; flex-direction:column; gap:0.9rem; }
+    .notice-title { font-family:var(--font-display); font-size:1.5rem; color:white; letter-spacing:0.04em; }
+    .notice-body { font-size:0.85rem; color:rgba(245,237,217,0.6); font-weight:300; line-height:1.7; }
+    .notice-cta { display:inline-block; background:var(--rust); color:white; font-family:var(--font-body); font-size:0.82rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; padding:0.75rem 1.3rem; border-radius:3px; transition:background 0.2s; }
+    .notice-cta:hover { background:var(--clay); }
+    .notice-cta-ghost { display:inline-block; background:rgba(245,237,217,0.07); color:rgba(245,237,217,0.65); border:1px solid rgba(245,237,217,0.14); font-family:var(--font-body); font-size:0.82rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; padding:0.75rem 1.3rem; border-radius:3px; transition:background 0.2s, color 0.2s; }
+    .notice-cta-ghost:hover { background:rgba(245,237,217,0.12); color:white; }
+
+    /* CERT BAR */
+    .cert-bar { background:var(--dusk); padding:2.5rem 5vw; display:flex; align-items:center; justify-content:center; gap:3rem; flex-wrap:wrap; border-top:1px solid rgba(245,237,217,0.06); }
+    .cert-item { display:flex; align-items:center; gap:1rem; }
+    .cert-badge { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+    .cert-badge.ppr { background:rgba(192,86,26,0.15); border:2px solid rgba(192,86,26,0.4); }
+    .cert-badge.fpc { background:rgba(46,74,43,0.3); border:2px solid rgba(126,200,122,0.3); }
+    .cert-name { font-family:var(--font-display); font-size:1rem; letter-spacing:0.08em; color:var(--sand); }
+    .cert-detail { font-size:0.72rem; color:rgba(245,237,217,0.45); margin-top:0.1rem; }
+    .cert-divider { width:1px; height:40px; background:rgba(245,237,217,0.1); }
+
+    /* FOOTER */
+    footer { background:var(--dusk); padding:2.5rem 5vw; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; border-top:1px solid rgba(255,255,255,0.05); }
+    .footer-logo { font-family:var(--font-display); font-size:1.3rem; letter-spacing:0.08em; color:var(--sand); }
+    .footer-copy { font-size:0.8rem; color:rgba(245,237,217,0.4); }
+    .footer-links { display:flex; gap:1.5rem; list-style:none; flex-wrap:wrap; align-items:center; }
+    .footer-links a { font-size:0.8rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:rgba(245,237,217,0.5); text-decoration:none; }
+    .footer-links a:hover { color:var(--rust); }
+    .footer-social { display:flex; gap:0.8rem; }
+    .footer-social-link { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(245,237,217,0.08); color:rgba(245,237,217,0.5); text-decoration:none; transition:background 0.2s,color 0.2s; }
+    .footer-social-link:hover { background:var(--clay); color:white; }
+    .footer-social-link svg { width:15px; height:15px; fill:currentColor; }
+
+    .fade-up { opacity:1; transform:translateY(0); transition:opacity 0.6s ease, transform 0.6s ease; }
+    .js-loaded .fade-up { opacity:0; transform:translateY(28px); }
+    .js-loaded .fade-up.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width:900px) {
+      .stats-bar { grid-template-columns:repeat(2,1fr); }
+      .stat-cell:nth-child(2) { border-right:none; }
+      .about-grid { grid-template-columns:1fr; }
+      .photo-bubble-wrap { max-width:460px; margin:0 auto; }
+      .day-grid { grid-template-columns:1fr; }
+      .schedule-signup-grid { grid-template-columns:1fr; }
+      .signup-card { position:static; }
+      .bring-grid { grid-template-columns:1fr; }
+      nav { padding:1rem 1.5rem; }
+    }
+    @media (max-width:600px) {
+      .goals-grid { grid-template-columns:1fr; }
+      h1.hero-h1 { font-size:4.5rem; }
+    }
+
+    /* REGISTER DROPDOWN */
+    .reg-wrap { position:relative; }
+    .reg-dropdown { max-height:0; overflow:hidden; transition:max-height 0.38s ease; }
+    .reg-dropdown.open { max-height:800px; }
+    .reg-inner { margin-top:0.6rem; border-radius:6px; padding:1rem 1.1rem; border:1px solid rgba(255,255,255,0.13); background:rgba(20,14,10,0.88); backdrop-filter:blur(12px); }
+    .reg-month { font-size:0.65rem; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; color:var(--amber); margin:0.9rem 0 0.4rem; }
+    .reg-month:first-child { margin-top:0; }
+    .reg-week { display:flex; align-items:center; justify-content:space-between; gap:0.6rem; padding:0.6rem 0.85rem; border-radius:4px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09); margin-bottom:0.3rem; text-decoration:none; color:rgba(255,255,255,0.88); font-size:0.81rem; font-weight:500; transition:background 0.18s, border-color 0.18s; cursor:pointer; }
+    .reg-week:last-child { margin-bottom:0; }
+    .reg-week:hover:not(.full) { background:rgba(232,116,59,0.22); border-color:var(--rust); }
+    .reg-week.full { opacity:0.52; pointer-events:none; }
+    .reg-week-spots { font-size:0.67rem; color:rgba(255,255,255,0.38); white-space:nowrap; flex-shrink:0; }
+    .reg-week.full .reg-week-spots { color:var(--rust); font-weight:700; }
+
+    /* Signup card dropdown variant */
+    .signup-card .reg-inner { background:rgba(0,0,0,0.3); border-color:rgba(245,237,217,0.1); }
+    .signup-card .reg-month { color:var(--amber); }
+    .signup-card .reg-week { background:rgba(245,237,217,0.05); border-color:rgba(245,237,217,0.08); color:rgba(245,237,217,0.85); }
+    .signup-card .reg-week:hover:not(.full) { background:rgba(232,116,59,0.25); border-color:var(--rust); }
+    .signup-card .reg-week-spots { color:rgba(245,237,217,0.35); }
+    .signup-card .reg-week.full .reg-week-spots { color:var(--rust); }
+
+    .btn-register-toggle { display:block; width:100%; text-align:center; background:var(--rust); color:white; font-family:var(--font-body); font-size:0.9rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:1.15rem 1.5rem; border-radius:4px; border:none; cursor:pointer; transition:background 0.2s, transform 0.15s; }
+    .btn-register-toggle:hover { background:var(--clay); transform:translateY(-1px); }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Desert Pickleball Academy</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#programs">Programs</a></li>
+    <li><a href="meet-cody.html">Meet Cody</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="camp-hero">
+  <div class="hero-photo"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Limited Spots — Summer 2025</div>
+    <h1 class="hero-h1">Junior<br>Summer<br><em>Camp</em></h1>
+    <div class="hero-pills">
+      <div class="hero-pill"><div class="dot"></div> Mon–Thu · 11:30 AM – 1:30 PM</div>
+      <div class="hero-pill"><div class="dot"></div> Ages 8–16</div>
+      <div class="hero-pill"><div class="dot"></div> Indoor · Cave Creek, AZ</div>
+      <div class="hero-pill"><div class="dot"></div> 10 Spots Max</div>
+    </div>
+    <div class="hero-btns" style="flex-wrap:wrap;align-items:flex-start;">
+      <div class="reg-wrap">
+        <button onclick="toggleReg('hero-reg')" class="btn-primary-camp" style="border:none;cursor:pointer;">🏓 Register Now ▾</button>
+        <div id="hero-reg" class="reg-dropdown">
+          <div class="reg-inner">
+            <div class="reg-month">June Camps</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfvP6FkOwccyP8JHMPk10PZcForyAEvtVJ5MzgqjSJTH6y1bw/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 1 — June 1–4</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSet997tx_gOEYug8xSmDxb-e8tVuGGsx5fCtDz3Oux3CJ8quA/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 2 — June 8–11</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSebcEl6WTGjADtxOHKymlcvXomgXPz_txtzQUAl2TZQyS-lSQ/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 3 — June 15–18</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSedzjZPkbqnaM2G1JvXVwuWPk-pGmDJqmIYImzkzb-p0rTdhA/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 4 — June 22–25</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmhpUudRzZpZTm9kcnusDCBuXIZIblhZKpRMeHjg0jkS2iww/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 5 — June 29–July 2</span><span class="reg-week-spots">10 spots max</span></a>
+            <div class="reg-month">July Camps</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScBaBm5pSlRJ7gmVoCVaItczkGCSTRzL9lWH0lX_9_mSgREJw/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 1 — July 6–9</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd2g5XpXb1Q4J42BmWIwV8mLnTKv6x0Bgmbc5C1-7G8HfRTZg/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 2 — July 13–16</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdC3QmKXq1sW_g0QfDSao1SYZjfKWGUc9Co1iFYed6nbOcQLQ/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 3 — July 20–23</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScKSQblXYVPqXvGbaxqiss1dwJnBvdGv4Z2HU4lZeY9maqTrA/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 4 — July 27–30</span><span class="reg-week-spots">10 spots max</span></a>
+          </div>
+        </div>
+      </div>
+      <a href="#curriculum" class="btn-ghost-camp">See the Curriculum</a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-cell"><div class="stat-cell-label">Duration</div><div class="stat-cell-value">4</div><div class="stat-cell-sub">Action-packed days</div></div>
+  <div class="stat-cell"><div class="stat-cell-label">Daily Time</div><div class="stat-cell-value">2hr</div><div class="stat-cell-sub">11:30 AM – 1:30 PM</div></div>
+  <div class="stat-cell"><div class="stat-cell-label">Ages</div><div class="stat-cell-value">8–16</div><div class="stat-cell-sub">All skill levels welcome</div></div>
+  <div class="stat-cell"><div class="stat-cell-label">Price</div><div class="stat-cell-value">$140</div><div class="stat-cell-sub">Per child · full camp</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about-camp">
+  <div class="about-grid fade-up">
+    <div class="photo-bubble-wrap">
+      <div class="fun-tag">Real Kids. Real Courts.</div>
+      <div class="photo-bubble-main">
+        <img src="coaching-kids.jpeg" alt="Kids lined up for camp instruction" />
+      </div>
+      <div class="photo-bubble-accent">
+        <img src="coach-court.jpeg" alt="Kids running drills on court" />
+      </div>
+    </div>
+    <div>
+      <div class="section-label">What It Is</div>
+      <h2>Four Days of<br>Real Pickleball</h2>
+      <p class="section-sub">This isn't a "keep kids busy" camp. Every day has a focused theme, real coaching, and actual reps on the court — capped off with a round-robin tournament on Day 4.</p>
+      <div class="goals-grid">
+        <div class="goal-chip"><span class="goal-chip-icon">🎯</span>Real fundamentals from day one</div>
+        <div class="goal-chip"><span class="goal-chip-icon">⚡</span>Footwork, reflexes, and court awareness</div>
+        <div class="goal-chip"><span class="goal-chip-icon">🧠</span>Strategy, shot selection, match confidence</div>
+        <div class="goal-chip"><span class="goal-chip-icon">🏆</span>Round-robin tournament on the final day</div>
+        <div class="goal-chip"><span class="goal-chip-icon">🌡️</span>Private indoor facility — no Arizona heat</div>
+        <div class="goal-chip"><span class="goal-chip-icon">👥</span>Max 10 kids — everyone gets reps</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section id="curriculum">
+  <div class="curriculum-intro fade-up">
+    <div class="section-label">4-Day Curriculum</div>
+    <h2>What Happens Each Day</h2>
+    <p style="font-size:0.95rem;color:var(--muted);font-weight:300;line-height:1.7;max-width:480px;margin-top:0.4rem;">Every session opens with warm-ups and skill demos, closes with full-court games. Here's the breakdown.</p>
+  </div>
+  <div class="day-grid fade-up">
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div><div class="day-num-tag">Day 1 · Monday</div><div class="day-title">Dinking & Footwork</div></div>
+        <div class="day-emoji">🦶</div>
+      </div>
+      <div class="day-card-body">
+        <p class="day-focus">Control, balance, and consistency at the kitchen line — the foundation everything else is built on.</p>
+        <div class="day-activities">
+          <div class="day-act">Dinking fundamentals — forehand & backhand</div>
+          <div class="day-act">Crosscourt dink games & partner drills</div>
+          <div class="day-act">Footwork races & agility drills</div>
+          <div class="day-act">Steal the Bacon · Hula Hoop Road · Up/Down Card Game</div>
+          <div class="day-act">Team dinking competitions + full-court play</div>
+        </div>
+        <div class="skill-tags"><span class="skill-tag">Soft Hands</span><span class="skill-tag">Paddle Control</span><span class="skill-tag">Quick Feet</span><span class="skill-tag">Positioning</span></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div><div class="day-num-tag">Day 2 · Tuesday</div><div class="day-title">Punch & Roll Volleys</div></div>
+        <div class="day-emoji">⚡</div>
+      </div>
+      <div class="day-card-body">
+        <p class="day-focus">Fast reactions, strong net positioning, and confident volley play. This is where points are won.</p>
+        <div class="day-activities">
+          <div class="day-act">Punch volley instruction & coach-fed drills</div>
+          <div class="day-act">Roll volley technique & rally competitions</div>
+          <div class="day-act">Hit the Box · Land, Sea, Air</div>
+          <div class="day-act">Live Ball games & team challenges</div>
+          <div class="day-act">Full pickleball match play</div>
+        </div>
+        <div class="skill-tags"><span class="skill-tag">Quick Reactions</span><span class="skill-tag">Volley Control</span><span class="skill-tag">Net Play</span><span class="skill-tag">Communication</span></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div><div class="day-num-tag">Day 3 · Wednesday</div><div class="day-title">Serving & Returning</div></div>
+        <div class="day-emoji">🎯</div>
+      </div>
+      <div class="day-card-body">
+        <p class="day-focus">Serving with purpose, returning with consistency. Two shots that set the tone for every single point.</p>
+        <div class="day-activities">
+          <div class="day-act">Serving technique & target practice</div>
+          <div class="day-act">Return of serve drills & accuracy games</div>
+          <div class="day-act">Hungry Hippos · Landmines · Three Rivers</div>
+          <div class="day-act">Mini matches & King/Queen of the Court</div>
+          <div class="day-act">Team games & extended match play</div>
+        </div>
+        <div class="skill-tags"><span class="skill-tag">Serve Consistency</span><span class="skill-tag">Return Placement</span><span class="skill-tag">Kitchen Movement</span><span class="skill-tag">Match Confidence</span></div>
+      </div>
+    </div>
+
+    <div class="day-card" style="border-color:rgba(232,116,59,0.3);">
+      <div class="day-card-header" style="background:rgba(232,116,59,0.05);">
+        <div><div class="day-num-tag" style="color:var(--clay);font-size:0.68rem;">Day 4 · Thursday — Tournament Day 🏆</div><div class="day-title">Overheads & Strategy</div></div>
+        <div class="day-emoji">🏅</div>
+      </div>
+      <div class="day-card-body">
+        <p class="day-focus">Overheads, third shot drops, all the skills together — then a real round-robin tournament to end camp.</p>
+        <div class="day-activities">
+          <div class="day-act">Overhead instruction & drills</div>
+          <div class="day-act">Third shot drop training & moving challenges</div>
+          <div class="day-act">Strategy discussion & tournament prep</div>
+          <div class="day-act">Round-robin tournament play</div>
+          <div class="day-act">Camp prizes & group photo 📸</div>
+        </div>
+        <div class="skill-tags"><span class="skill-tag">Court Awareness</span><span class="skill-tag">Shot Selection</span><span class="skill-tag">Team Communication</span><span class="skill-tag">Competitive Play</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip">
+  <img src="coach-court.jpeg" alt="Kids running drills on the pickleball court" />
+  <div class="photo-strip-overlay">
+    <div>
+      <div class="photo-strip-big">Indoor Courts. <span>Zero Excuses.</span></div>
+      <div class="photo-strip-sub">Private Facility · Cave Creek, AZ · All Weather · All Summer</div>
+    </div>
+  </div>
+</div>
+
+<!-- SCHEDULE + SIGNUP -->
+<section id="signup">
+  <div class="schedule-signup-grid fade-up">
+    <div class="schedule-block">
+      <div class="section-label">Daily Structure</div>
+      <h3>Each 2-Hour Session</h3>
+      <p>Same high-energy structure every day — focused skill work, competitive games, and real court time.</p>
+      <div class="sched-list">
+        <div class="sched-row"><div class="sched-time">11:30</div><div class="sched-text"><strong>Warm-Ups & Attendance</strong><span>Get loose, get focused, get on the court.</span></div></div>
+        <div class="sched-row"><div class="sched-time">11:45</div><div class="sched-text"><strong>Skill Demonstration</strong><span>Cody breaks down the day's core skill — visual, hands-on, explained.</span></div></div>
+        <div class="sched-row"><div class="sched-time">12:00</div><div class="sched-text"><strong>Partner Drills</strong><span>Reps, reps, reps — structured partner and coach-fed drills.</span></div></div>
+        <div class="sched-row"><div class="sched-time">12:30</div><div class="sched-text"><strong>Games & Competitions</strong><span>Themed mini-games that make the skills competitive and fun.</span></div></div>
+        <div class="sched-row"><div class="sched-time">12:50</div><div class="sched-text"><strong>Snack & Hydration Break</strong><span>Rest, refuel, reset.</span></div></div>
+        <div class="sched-row"><div class="sched-time">1:05</div><div class="sched-text"><strong>Team Activities</strong><span>Team-building challenges and group competitions.</span></div></div>
+        <div class="sched-row"><div class="sched-time">1:20</div><div class="sched-text"><strong>Full-Court Pickleball</strong><span>Real games. Real points. Real pickleball.</span></div></div>
+      </div>
+    </div>
+
+    <div class="signup-card">
+      <div class="signup-card-eyebrow">☀️ Summer 2025 · Cave Creek, AZ</div>
+      <div class="signup-card-title">Reserve Your<br>Spot</div>
+      <p class="signup-card-sub">Fill out the form to claim your spot. Cody will follow up to confirm registration.</p>
+      <div class="signup-price">$140</div>
+      <div class="signup-price-note">Per child · entire 4-day camp · cash or Venmo</div>
+      <div class="signup-details">
+        <div class="signup-row"><span class="signup-row-icon">📅</span><span>Monday–Thursday · 11:30 AM – 1:30 PM</span></div>
+        <div class="signup-row"><span class="signup-row-icon">📍</span><span>Private Indoor Facility · Cave Creek, AZ</span></div>
+        <div class="signup-row"><span class="signup-row-icon">👧</span><span>Ages 8–16 · Max 10 kids</span></div>
+        <div class="signup-row"><span class="signup-row-icon">🏓</span><span>Loaner paddles available if needed</span></div>
+        <div class="signup-row"><span class="signup-row-icon">💳</span><span>Cash or Venmo · direct payment only</span></div>
+      </div>
+      <div class="reg-wrap">
+        <button onclick="toggleReg('card-reg')" class="btn-register-toggle">🏓 Sign Up — Select a Week ▾</button>
+        <div id="card-reg" class="reg-dropdown">
+          <div class="reg-inner">
+            <div class="reg-month">June Camps</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfvP6FkOwccyP8JHMPk10PZcForyAEvtVJ5MzgqjSJTH6y1bw/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 1 — June 1–4</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSet997tx_gOEYug8xSmDxb-e8tVuGGsx5fCtDz3Oux3CJ8quA/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 2 — June 8–11</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSebcEl6WTGjADtxOHKymlcvXomgXPz_txtzQUAl2TZQyS-lSQ/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 3 — June 15–18</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSedzjZPkbqnaM2G1JvXVwuWPk-pGmDJqmIYImzkzb-p0rTdhA/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 4 — June 22–25</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmhpUudRzZpZTm9kcnusDCBuXIZIblhZKpRMeHjg0jkS2iww/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 5 — June 29–July 2</span><span class="reg-week-spots">10 spots max</span></a>
+            <div class="reg-month">July Camps</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScBaBm5pSlRJ7gmVoCVaItczkGCSTRzL9lWH0lX_9_mSgREJw/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 1 — July 6–9</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd2g5XpXb1Q4J42BmWIwV8mLnTKv6x0Bgmbc5C1-7G8HfRTZg/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 2 — July 13–16</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdC3QmKXq1sW_g0QfDSao1SYZjfKWGUc9Co1iFYed6nbOcQLQ/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 3 — July 20–23</span><span class="reg-week-spots">10 spots max</span></a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScKSQblXYVPqXvGbaxqiss1dwJnBvdGv4Z2HU4lZeY9maqTrA/viewform?usp=header" target="_blank" rel="noopener" class="reg-week"><span class="reg-week-label">Week 4 — July 27–30</span><span class="reg-week-spots">10 spots max</span></a>
+          </div>
+        </div>
+      </div>
+      <p class="signup-no-esa"><strong>Note:</strong> This camp is not ESA or PSA approved.<br>Direct payment only. Questions? Text Cody at (480) 910-2636.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT TO BRING -->
+<section id="bring">
+  <div class="fade-up">
+    <div class="section-label">Be Ready</div>
+    <h2>What to Bring</h2>
+  </div>
+  <div class="bring-grid fade-up">
+    <div class="bring-card">
+      <div class="bring-card-title">Pack List</div>
+      <div class="bring-list">
+        <div class="bring-item"><div class="bring-icon-wrap">🏓</div> Pickleball paddle — loaners available if needed</div>
+        <div class="bring-item"><div class="bring-icon-wrap">👟</div> Athletic shoes with non-marking soles</div>
+        <div class="bring-item"><div class="bring-icon-wrap">💧</div> Water bottle — staying hydrated is non-negotiable</div>
+        <div class="bring-item"><div class="bring-icon-wrap">🍎</div> A snack for the mid-session break</div>
+        <div class="bring-item"><div class="bring-icon-wrap">👕</div> Comfortable athletic clothing</div>
+      </div>
+    </div>
+    <div class="notice-card">
+      <div class="notice-title">Questions?</div>
+      <p class="notice-body">Not sure if your kid is ready? Wondering about skill level? Have questions about the schedule? Reach out — Cody is happy to help figure out if this camp is the right fit.</p>
+      <a href="sms:4809102636" class="notice-cta">📱 Text Cody — (480) 910-2636</a>
+      <a href="mailto:desertpickleballacademy@gmail.com?subject=Summer Camp Question" class="notice-cta-ghost">✉️ Send an Email</a>
+    </div>
+  </div>
+</section>
+
+<!-- CERT BAR -->
+<div class="cert-bar">
+  <div class="cert-item"><div class="cert-badge ppr">🎓</div><div><div class="cert-name">PPR Certified Coach</div><div class="cert-detail">Professional Pickleball Registry</div></div></div>
+  <div class="cert-divider"></div>
+  <div class="cert-item"><div class="cert-badge fpc">✅</div><div><div class="cert-name">Fingerprint Clearance Card</div><div class="cert-detail">Arizona Dept. of Public Safety</div></div></div>
+  <div class="cert-divider"></div>
+  <div class="cert-item"><div class="cert-badge ppr" style="font-size:1.1rem;">🏆</div><div><div class="cert-name">Phoenix Swarm · UPL</div><div class="cert-detail">Signed Player · Semi-Pro League</div></div></div>
+</div>
+
+<footer>
+  <div class="footer-logo">Desert Pickleball Academy</div>
+  <ul class="footer-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#programs">Programs</a></li>
+    <li><a href="meet-cody.html">Meet Cody</a></li>
+    <li><a href="intro-clinic.html">Intro Clinic</a></li>
+    <li><a href="private-lessons.html">Private Lessons</a></li>
+    <li><a href="esa-program.html">Junior Classes</a></li>
+    <li><a href="junior-summer-camp.html">Summer Camp</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/cody__temple/" target="_blank" rel="noopener" class="footer-social-link" title="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=100071701856594" target="_blank" rel="noopener" class="footer-social-link" title="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+  </div>
+  <p class="footer-copy">© 2025 Desert Pickleball Academy · Cave Creek, AZ</p>
+</footer>
+
+<script>
+  function toggleReg(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 80); });
+  document.body.classList.add('js-loaded');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
